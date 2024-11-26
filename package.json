@@ -1,0 +1,16 @@
+{
+  "name": "ai-gateway-image-generator",
+  "version": "1.0.0",
+  "description": "A Node.js application to generate images using multiple AI models",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "@huggingface/inference": "^2.6.1",
+    "axios": "^1.6.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "openai": "^4.20.1"
+  }
+}
