@@ -52,7 +52,7 @@ http://localhost:3000
 2. **Enter Prompt**:
    - Be descriptive and specific
    - Include details about style, lighting, composition
-   - Example: "A serene Japanese garden with a red maple tree, koi pond, and stone lanterns at sunset"
+   - Example: "Cat in the Eiffel Tower street"
 
 3. **Generate Image**:
    - Click "Generate Image" and wait for the result
@@ -95,12 +95,12 @@ AIGateway
 Here are some examples of images generated using different providers:
 
 ### HuggingFace (Stable Diffusion)
-![Sample Image 1](images/image1.png)
-*Prompt: "A serene Japanese garden with a red maple tree, koi pond, and stone lanterns at sunset"*
+![Sample Image 1](images/image3.png)
+*Prompt: "cat in the Eiffel Tower street"*
 
 ### OpenAI (DALL-E)
-![Sample Image 2](images/image2.png)
-*Prompt: "A futuristic cityscape with flying cars and neon lights reflecting off glass buildings"*
+![Sample Image 2](images/image4.png)
+*Prompt: "Iron Man in the Smoky Mountains."*
 
 ## 🔍 Troubleshooting
 
