@@ -125,10 +125,6 @@ Here are some examples of images generated using different providers:
 ![Sample Image 2](images/image4.png)
 *Prompt: "Iron Man in the Smoky Mountains."*
 
-### MidJourney
-![Sample Image 3](images/image5.png)
-*Prompt: "Cyberpunk cityscape at sunset."*
-
 ### DeepAI
 ![Sample Image 4](images/image6.png)
 *Prompt: "Fantasy landscape with dragons."*
