@@ -1,57 +1,76 @@
 const OpenAIService = require('./providers/OpenAIService');
-const ClaudeService = require('./providers/ClaudeService');
-const LlamaService = require('./providers/LlamaService');
 const HuggingFaceService = require('./providers/HuggingFaceService');
+const LlamaService = require('./providers/LlamaService');
 
 class AIGateway {
     constructor() {
         this.providers = {
             openai: new OpenAIService(),
-            claude: new ClaudeService(),
-            llama: new LlamaService(),
             huggingface: new HuggingFaceService(),
+            llama: new LlamaService()
+            // Claude removed as it doesn't support image generation
         };
     }
 
-    async generateImage(prompt, options = {}) {
-        const results = [];
+    async generateImage(options) {
+        const { prompt, provider } = options;
         const errors = [];
+        let lastError = null;
 
-        // Define which providers to use based on options or use all by default
-        const providersToUse = options.providers || Object.keys(this.providers);
-
-        // Call each provider in parallel
-        const promises = providersToUse.map(async (providerName) => {
-            try {
-                const provider = this.providers[providerName];
-                if (!provider || !provider.isConfigured()) {
-                    return;
-                }
-
-                const result = await provider.generateImage(prompt);
-                results.push({
-                    provider: providerName,
-                    result,
-                    timestamp: new Date(),
-                });
-            } catch (error) {
-                errors.push({
-                    provider: providerName,
-                    error: error.message,
-                });
-            }
-        });
-
-        await Promise.all(promises);
-
-        // If no successful results, throw an error with details
-        if (results.length === 0) {
-            throw new Error(`All providers failed: ${JSON.stringify(errors)}`);
+        // Validate prompt
+        if (!prompt || typeof prompt !== 'string') {
+            throw new Error('Invalid prompt: prompt must be a non-empty string');
         }
 
-        // For now, return the first successful result
-        // This can be enhanced with more sophisticated selection logic
-        return results[0].result;
+        // If a specific provider is requested, try only that one
+        if (provider && provider !== 'all') {
+            const selectedProvider = this.providers[provider];
+            if (!selectedProvider) {
+                throw new Error(`Provider ${provider} not found or not supported`);
+            }
+            try {
+                const result = await selectedProvider.generateImage(prompt);
+                if (!result || !result.url) {
+                    throw new Error(`Invalid response from ${provider}`);
+                }
+                return {
+                    ...result,
+                    provider,
+                    success: true
+                };
+            } catch (error) {
+                throw new Error(`${provider} provider failed: ${error.message}`);
+            }
+        }
+
+        // Try all configured providers
+        for (const [name, service] of Object.entries(this.providers)) {
+            if (!service.isConfigured()) {
+                console.log(`Provider ${name} is not configured, skipping...`);
+                continue;
+            }
+
+            try {
+                const result = await service.generateImage(prompt);
+                if (!result || !result.url) {
+                    throw new Error(`Invalid response from ${name}`);
+                }
+                return {
+                    ...result,
+                    provider: name,
+                    success: true
+                };
+            } catch (error) {
+                console.error(`${name} provider failed:`, error);
+                lastError = error;
+                errors.push({ provider: name, error: error.message });
+            }
+        }
+
+        // If we get here, all providers failed
+        const errorMessage = `All providers failed: ${JSON.stringify(errors)}`;
+        console.error(errorMessage);
+        throw new Error(errorMessage);
     }
 }
 

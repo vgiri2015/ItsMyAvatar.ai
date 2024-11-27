@@ -4,6 +4,9 @@ class HuggingFaceService {
     constructor() {
         this.client = process.env.HUGGINGFACE_API_KEY ? 
             new HfInference(process.env.HUGGINGFACE_API_KEY) : null;
+        
+        // Use a more reliable model for image generation
+        this.model = 'runwayml/stable-diffusion-v1-5';
     }
 
     isConfigured() {
@@ -17,8 +20,13 @@ class HuggingFaceService {
 
         try {
             const response = await this.client.textToImage({
-                model: 'stabilityai/stable-diffusion-2',
+                model: this.model,
                 inputs: prompt,
+                parameters: {
+                    negative_prompt: "blurry, bad quality, distorted",
+                    num_inference_steps: 30,
+                    guidance_scale: 7.5
+                }
             });
 
             // Convert blob to base64
@@ -29,11 +37,12 @@ class HuggingFaceService {
             return {
                 url,
                 metadata: {
-                    model: 'stable-diffusion-2',
+                    model: this.model,
                     provider: 'huggingface'
                 }
             };
         } catch (error) {
+            console.error('HuggingFace error:', error);
             throw new Error(`HuggingFace image generation failed: ${error.message}`);
         }
     }
