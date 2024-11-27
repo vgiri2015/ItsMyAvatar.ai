@@ -90,6 +90,18 @@ AIGateway
   }
   ```
 
+## 🖼 Sample Generated Images
+
+Here are some examples of images generated using different providers:
+
+### HuggingFace (Stable Diffusion)
+![Sample Image 1](images/image1.png)
+*Prompt: "A serene Japanese garden with a red maple tree, koi pond, and stone lanterns at sunset"*
+
+### OpenAI (DALL-E)
+![Sample Image 2](images/image2.png)
+*Prompt: "A futuristic cityscape with flying cars and neon lights reflecting off glass buildings"*
+
 ## 🔍 Troubleshooting
 
 1. **Server Already Running**
@@ -136,7 +148,6 @@ AIGateway
 │   └── index.html               # Main UI
 ├── app.js                        # Express application
 └── package.json                 # Project dependencies
-```
 
 ## 📝 Notes
 
