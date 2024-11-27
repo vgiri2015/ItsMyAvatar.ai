@@ -7,12 +7,13 @@ A versatile AI image generation service that provides a unified interface to mul
 - Multiple AI Provider Support:
   - OpenAI (DALL-E)
   - HuggingFace (Stable Diffusion)
-  - MidJourney
+  - MidJourney (via APIFrame.pro)
   - DeepAI
 - Unified API Interface
 - Automatic Fallback Mechanism
 - Real-time Image Generation
 - User-friendly Interface
+- Comprehensive Test Scripts
 
 ## 🛠️ Setup
 
@@ -39,12 +40,29 @@ A versatile AI image generation service that provides a unified interface to mul
    Get your API keys from:
    - OpenAI: https://platform.openai.com/account/api-keys
    - HuggingFace: https://huggingface.co/settings/tokens
-   - MidJourney: https://apiframe.pro/
+   - MidJourney: https://apiframe.pro/ (Note: APIFrame.pro provides Midjourney API access)
    - DeepAI: https://deepai.org/dashboard/api-keys
 
 4. **Start Server**:
    ```bash
    npm start
+   ```
+
+## 🧪 Testing
+
+The project includes comprehensive test scripts for each provider:
+
+1. **Test Scripts**:
+   - `test-deepai.js`: Test DeepAI API integration
+   - `test-midjourney.js`: Test Midjourney API integration via APIFrame.pro
+
+2. **Running Tests**:
+   ```bash
+   # Test DeepAI integration
+   node test-deepai.js
+
+   # Test Midjourney integration
+   node test-midjourney.js
    ```
 
 ## 🎯 Usage
@@ -53,7 +71,7 @@ A versatile AI image generation service that provides a unified interface to mul
    - Choose from available providers:
      - HuggingFace (Stable Diffusion)
      - OpenAI (DALL-E)
-     - MidJourney
+     - MidJourney (via APIFrame.pro)
      - DeepAI
    - Each provider has different strengths and characteristics
 
@@ -81,17 +99,19 @@ A versatile AI image generation service that provides a unified interface to mul
 - Good for experimentation
 - May have longer generation times
 
-### MidJourney
+### MidJourney (via APIFrame.pro)
 - Best for: Highly detailed artistic renderings
 - Excellent at stylized artwork
 - Strong with fantasy and concept art
-- Requires API subscription
+- Requires APIFrame.pro subscription for API access
+- Supports latest Midjourney v5 model
 
 ### DeepAI
 - Best for: Quick prototypes and variations
 - Simple API integration
 - Good for basic image generation
 - Free tier with rate limits
+- Supports both text-to-image and image-to-image
 
 ## 🖼 Sample Generated Images
 
