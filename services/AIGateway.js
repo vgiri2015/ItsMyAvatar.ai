@@ -1,18 +1,15 @@
 const OpenAIService = require('./providers/OpenAIService');
 const HuggingFaceService = require('./providers/HuggingFaceService');
-const LlamaService = require('./providers/LlamaService');
 const MidjourneyService = require('./MidjourneyService');
 const DeepAIService = require('./providers/DeepAIService');
 
 class AIGateway {
     constructor() {
         this.providers = {
-            openai: new OpenAIService(process.env.OPENAI_API_KEY),
+            openai: new OpenAIService(),
             huggingface: new HuggingFaceService(process.env.HUGGINGFACE_API_KEY),
-            llama: new LlamaService(process.env.LLAMA_API_KEY),
             midjourney: new MidjourneyService(process.env.MIDJOURNEY_API_KEY),
             deepai: new DeepAIService(process.env.DEEPAI_API_KEY)
-            // Claude removed as it doesn't support image generation
         };
     }
 
@@ -33,6 +30,7 @@ class AIGateway {
                 throw new Error(`Provider ${provider} not found or not supported`);
             }
             try {
+                console.log(`Attempting to generate image with ${provider}...`);
                 const result = await selectedProvider.generateImage(prompt);
                 if (!result || !result.url) {
                     throw new Error(`Invalid response from ${provider}`);
@@ -43,18 +41,24 @@ class AIGateway {
                     success: true
                 };
             } catch (error) {
+                console.error(`${provider} provider failed:`, error);
                 throw new Error(`${provider} provider failed: ${error.message}`);
             }
         }
 
         // Try all configured providers
-        for (const [name, service] of Object.entries(this.providers)) {
-            if (!service.isConfigured()) {
-                console.log(`Provider ${name} is not configured, skipping...`);
-                continue;
-            }
+        const availableProviders = Object.entries(this.providers)
+            .filter(([_, service]) => service.isConfigured());
 
+        if (availableProviders.length === 0) {
+            throw new Error('No providers are properly configured');
+        }
+
+        console.log('Available providers:', availableProviders.map(([name]) => name));
+
+        for (const [name, service] of availableProviders) {
             try {
+                console.log(`Attempting to generate image with ${name}...`);
                 const result = await service.generateImage(prompt);
                 if (!result || !result.url) {
                     throw new Error(`Invalid response from ${name}`);

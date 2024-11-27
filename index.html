@@ -30,52 +30,6 @@
             text-align: center;
         }
 
-        .feature-card {
-            border: none;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .provider-card {
-            border: 1px solid #eee;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .provider-card:hover {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .gallery-item {
-            margin-bottom: 30px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .pricing-card {
-            border: none;
-            border-radius: 15px;
-            transition: transform 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .contact-section {
-            background-color: #f8f9fa;
-            padding: 80px 0;
-        }
-
         footer {
             background-color: var(--secondary-color);
             color: white;
@@ -113,18 +67,6 @@
             <a class="navbar-brand" href="#">
                 <img src="images/itsmyavatar-logo.svg" alt="ItsMyAvatar.ai Logo">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#providers">Providers</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                </ul>
-            </div>
         </div>
     </nav>
 
@@ -133,195 +75,83 @@
         <div class="container">
             <h1 class="display-4 mb-4">Create Your Perfect Avatar with AI</h1>
             <p class="lead mb-4">Transform your ideas into stunning avatars using multiple AI providers including DALL-E, Stable Diffusion, MidJourney, and DeepAI</p>
-            <button class="btn btn-light btn-lg">Get Started</button>
+            <button class="btn btn-light btn-lg" onclick="document.getElementById('generate-section').scrollIntoView({behavior: 'smooth'})">Get Started</button>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="py-5">
+    <!-- Image Generation Section -->
+    <section id="generate-section" class="py-5">
         <div class="container">
-            <h2 class="text-center mb-5">Powerful Features</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-magic fa-3x mb-3 text-primary"></i>
-                            <h4>Multiple AI Providers</h4>
-                            <p>Access top AI image generation models through a single interface</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-bolt fa-3x mb-3 text-primary"></i>
-                            <h4>Real-time Generation</h4>
-                            <p>Get your AI-generated images in seconds</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-sync fa-3x mb-3 text-primary"></i>
-                            <h4>Automatic Fallback</h4>
-                            <p>Seamless provider switching for uninterrupted service</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Providers Section -->
-    <section id="providers" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5">Our Providers</h2>
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="provider-card text-center">
-                        <img src="images/openai-logo.svg" alt="OpenAI" class="mb-3" style="height: 60px;">
-                        <h4>DALL-E</h4>
-                        <p>Best for realistic and artistic compositions</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="provider-card text-center">
-                        <img src="images/huggingface-logo.svg" alt="HuggingFace" class="mb-3" style="height: 60px;">
-                        <h4>Stable Diffusion</h4>
-                        <p>Perfect for creative and artistic images</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="provider-card text-center">
-                        <img src="images/midjourney-logo.svg" alt="MidJourney" class="mb-3" style="height: 60px;">
-                        <h4>MidJourney</h4>
-                        <p>Excellent for detailed artistic renderings</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="provider-card text-center">
-                        <img src="images/deepai-logo.svg" alt="DeepAI" class="mb-3" style="height: 60px;">
-                        <h4>DeepAI</h4>
-                        <p>Great for quick prototypes and variations</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section id="gallery" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Image Gallery</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="gallery-item">
-                        <img src="images/image3.png" alt="Sample 1" class="img-fluid">
-                        <div class="p-3">
-                            <p class="mb-0"><small class="text-muted">Generated using Stable Diffusion</small></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="gallery-item">
-                        <img src="images/image4.png" alt="Sample 2" class="img-fluid">
-                        <div class="p-3">
-                            <p class="mb-0"><small class="text-muted">Generated using DALL-E</small></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="gallery-item">
-                        <img src="images/image5.png" alt="Sample 3" class="img-fluid">
-                        <div class="p-3">
-                            <p class="mb-0"><small class="text-muted">Generated using DeepAI</small></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="pricing" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5">Pricing Plans</h2>
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <div class="card pricing-card text-center">
-                        <div class="card-body">
-                            <h4 class="card-title">Basic</h4>
-                            <h2 class="card-price">$9<small>/month</small></h2>
-                            <ul class="list-unstyled mt-3 mb-4">
-                                <li>100 images/month</li>
-                                <li>Access to 2 providers</li>
-                                <li>Basic support</li>
-                                <li>Standard resolution</li>
-                            </ul>
-                            <button class="btn btn-outline-primary">Get Started</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="card pricing-card text-center">
-                        <div class="card-body">
-                            <h4 class="card-title">Pro</h4>
-                            <h2 class="card-price">$29<small>/month</small></h2>
-                            <ul class="list-unstyled mt-3 mb-4">
-                                <li>500 images/month</li>
-                                <li>Access to all providers</li>
-                                <li>Priority support</li>
-                                <li>HD resolution</li>
-                            </ul>
-                            <button class="btn btn-primary">Get Started</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="card pricing-card text-center">
-                        <div class="card-body">
-                            <h4 class="card-title">Enterprise</h4>
-                            <h2 class="card-price">$99<small>/month</small></h2>
-                            <ul class="list-unstyled mt-3 mb-4">
-                                <li>Unlimited images</li>
-                                <li>Custom provider integration</li>
-                                <li>24/7 support</li>
-                                <li>4K resolution</li>
-                            </ul>
-                            <button class="btn btn-outline-primary">Contact Us</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <h2 class="text-center mb-5">Get In Touch</h2>
+            <h2 class="text-center mb-5">Generate Your Image</h2>
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <input type="text" class="form-control" placeholder="Your Name">
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="generateForm" class="mb-4">
+                                <div class="mb-4">
+                                    <label for="provider" class="form-label">Select Provider</label>
+                                    <select class="form-select" id="provider" required>
+                                        <option value="all">Auto (Try All Providers)</option>
+                                        <option value="openai">DALL-E (OpenAI)</option>
+                                        <option value="huggingface">Stable Diffusion (HuggingFace)</option>
+                                        <option value="midjourney">MidJourney</option>
+                                        <option value="deepai">DeepAI</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="prompt" class="form-label">Your Prompt</label>
+                                    <textarea class="form-control" id="prompt" rows="3" placeholder="Describe the image you want to generate..." required></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="style" class="form-label">Image Style</label>
+                                    <select class="form-select" id="style">
+                                        <option value="realistic">Realistic</option>
+                                        <option value="artistic">Artistic</option>
+                                        <option value="cartoon">Cartoon</option>
+                                        <option value="anime">Anime</option>
+                                        <option value="digital-art">Digital Art</option>
+                                    </select>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <label for="size" class="form-label">Image Size</label>
+                                        <select class="form-select" id="size">
+                                            <option value="512x512">512x512</option>
+                                            <option value="1024x1024">1024x1024</option>
+                                            <option value="1024x1792">1024x1792 (Portrait)</option>
+                                            <option value="1792x1024">1792x1024 (Landscape)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="quality" class="form-label">Quality</label>
+                                        <select class="form-select" id="quality">
+                                            <option value="standard">Standard</option>
+                                            <option value="hd">HD</option>
+                                            <option value="4k">4K</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-lg w-100">Generate Image</button>
+                            </form>
+                            <div id="result" class="text-center" style="display: none;">
+                                <div class="spinner-border text-primary mb-3" role="status" id="loading">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <div id="error" class="alert alert-danger" style="display: none;"></div>
+                                <div id="imageResult" style="display: none;">
+                                    <img id="generatedImage" class="img-fluid rounded shadow-sm mb-3" alt="Generated Image">
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-success" onclick="downloadImage()">Download Image</button>
+                                        <button class="btn btn-outline-primary" onclick="generateVariation()">Generate Variation</button>
+                                    </div>
+                                    <div class="mt-3">
+                                        <h5>Image Details:</h5>
+                                        <p id="imageMetadata" class="text-muted"></p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <input type="email" class="form-control" placeholder="Your Email">
-                            </div>
                         </div>
-                        <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Subject">
-                        </div>
-                        <div class="mb-3">
-                            <textarea class="form-control" rows="5" placeholder="Your Message"></textarea>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -342,5 +172,79 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Image Generation Form Handler
+        document.getElementById('generateForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('imageResult').style.display = 'none';
+
+            // Get form values
+            const provider = document.getElementById('provider').value;
+            const prompt = document.getElementById('prompt').value;
+            const style = document.getElementById('style').value;
+            const size = document.getElementById('size').value;
+            const quality = document.getElementById('quality').value;
+
+            try {
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        provider,
+                        prompt,
+                        style,
+                        size,
+                        quality
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to generate image');
+                }
+
+                // Display the generated image
+                document.getElementById('generatedImage').src = data.imageUrl;
+                document.getElementById('imageMetadata').textContent = 
+                    `Generated by: ${data.metadata.provider}` +
+                    (data.metadata.model ? ` | Model: ${data.metadata.model}` : '') +
+                    (data.metadata.prompt ? ` | Prompt: ${data.metadata.prompt}` : '') +
+                    (data.metadata.style ? ` | Style: ${data.metadata.style}` : '') +
+                    (data.metadata.size ? ` | Size: ${data.metadata.size}` : '') +
+                    (data.metadata.quality ? ` | Quality: ${data.metadata.quality}` : '');
+                
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('imageResult').style.display = 'block';
+            } catch (error) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('error').textContent = error.message;
+            }
+        });
+
+        function downloadImage() {
+            const image = document.getElementById('generatedImage');
+            const link = document.createElement('a');
+            link.href = image.src;
+            link.download = 'generated-image.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function generateVariation() {
+            const prompt = document.getElementById('prompt').value;
+            document.getElementById('prompt').value = `${prompt} (variation)`;
+            document.getElementById('generateForm').dispatchEvent(new Event('submit'));
+        }
+    </script>
 </body>
 </html>

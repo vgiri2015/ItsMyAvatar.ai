@@ -5,22 +5,38 @@ A versatile AI image generation service that provides a unified interface to mul
 ## 🚀 Features
 
 - Multiple AI Provider Support:
-  - OpenAI (DALL-E)
-  - HuggingFace (Stable Diffusion)
+  - OpenAI (DALL-E 2)
+  - HuggingFace (Stable Diffusion v1-4)
   - MidJourney (via APIFrame.pro)
   - DeepAI
 - Unified API Interface
-- Automatic Fallback Mechanism
+- Automatic Provider Fallback
 - Real-time Image Generation
+- Model Information Display
+- Robust Error Handling
 - User-friendly Interface
-- Comprehensive Test Scripts
+
+## 🎨 Image Generation Features
+
+- Provider Selection:
+  - Choose specific provider or "Auto" mode
+  - Auto mode tries all available providers
+  - Displays which model generated the image
+- Customization Options:
+  - Style selection (realistic, artistic, etc.)
+  - Size options (512x512, 1024x1024)
+  - Quality settings (standard, HD)
+- Metadata Display:
+  - Provider and model information
+  - Generation parameters
+  - Image specifications
 
 ## 🛠️ Setup
 
 1. **Clone Repository**:
    ```bash
-   git clone https://github.com/vgiri2015/myavatar.ai.git
-   cd myavatar.ai
+   git clone https://github.com/vgiri2015/itsmyavatar.ai.git
+   cd itsmyavatar.ai
    ```
 
 2. **Install Dependencies**:
@@ -48,153 +64,150 @@ A versatile AI image generation service that provides a unified interface to mul
    npm start
    ```
 
-## 🧪 Testing
+## 🚀 Running the Application
 
-The project includes comprehensive test scripts for each provider:
-
-1. **Test Scripts**:
-   - `test-deepai.js`: Test DeepAI API integration
-   - `test-midjourney.js`: Test Midjourney API integration via APIFrame.pro
-
-2. **Running Tests**:
+1. **Start the Server**:
    ```bash
-   # Test DeepAI integration
-   node test-deepai.js
-
-   # Test Midjourney integration
-   node test-midjourney.js
+   # Navigate to project directory
+   cd itsmyavatar.ai
+   
+   # Start the server
+   node server.js
    ```
+   The server will start on http://localhost:3000 and display available AI providers.
+
+2. **Verify Server Status**:
+   - Check terminal for successful startup message
+   - You should see "Server is running on http://localhost:3000"
+   - Available AI providers will be listed
+
+3. **Access the Application**:
+   - Open your browser
+   - Navigate to http://localhost:3000
+   - You should see the image generation interface
+
+4. **Managing the Server**:
+   ```bash
+   # To stop the server
+   # Press Ctrl+C in the terminal
+   
+   # If the port is already in use, find and kill the process
+   lsof -i :3000   # Find process using port 3000
+   kill -9 <PID>   # Replace <PID> with the process ID
+   
+   # To run in background (optional)
+   node server.js &
+   ```
+
+5. **Troubleshooting**:
+   - If server won't start, check if port 3000 is already in use
+   - Verify all environment variables are set in `.env`
+   - Check terminal for error messages
+   - Ensure all dependencies are installed (`npm install`)
 
 ## 🎯 Usage
 
 1. **Select Provider**:
-   - Choose from available providers:
-     - HuggingFace (Stable Diffusion)
-     - OpenAI (DALL-E)
-     - MidJourney (via APIFrame.pro)
-     - DeepAI
-   - Each provider has different strengths and characteristics
+   - Choose a specific provider or "Auto (Try All Providers)"
+   - Each provider uses different models:
+     - OpenAI: DALL-E 2
+     - HuggingFace: Stable Diffusion v1-4
+     - MidJourney: Latest model via APIFrame.pro
+     - DeepAI: Various models
 
-2. **Enter Prompt**:
-   - Be descriptive and specific
-   - Include details about style, lighting, composition
-   - Example: "Cat in the Eiffel Tower street"
+2. **Customize Generation**:
+   - Enter a descriptive prompt
+   - Select style (realistic, artistic, etc.)
+   - Choose image size and quality
+   - Example prompt: "A cat eating lunch in Paris"
 
-3. **Generate Image**:
-   - Click "Generate Image" and wait for the result
-   - Generation typically takes 10-20 seconds
-   - The UI will show a loading indicator during generation
-
-## 🌟 Provider Comparison
-
-### OpenAI (DALL-E)
-- Best for: Realistic and artistic compositions
-- Fast generation time
-- Consistent quality
-- Requires paid API credits
-
-### HuggingFace (Stable Diffusion)
-- Best for: Creative and artistic images
-- Free tier available
-- Good for experimentation
-- May have longer generation times
-
-### MidJourney (via APIFrame.pro)
-- Best for: Highly detailed artistic renderings
-- Excellent at stylized artwork
-- Strong with fantasy and concept art
-- Requires APIFrame.pro subscription for API access
-- Supports latest Midjourney v5 model
-
-### DeepAI
-- Best for: Quick prototypes and variations
-- Simple API integration
-- Good for basic image generation
-- Free tier with rate limits
-- Supports both text-to-image and image-to-image
+3. **Generate & View Results**:
+   - Click "Generate" to create image
+   - View generation progress
+   - See which model was used
+   - Review full metadata (provider, model, settings)
 
 ## 🖼 Sample Generated Images
 
 Here are some examples of images generated using different providers:
 
-### HuggingFace (Stable Diffusion)
+### HuggingFace (Stable Diffusion v1-4)
 ![Sample Image 1](images/image3.png)
-*Prompt: "cat in the Eiffel Tower street"*
+*Prompt: "cat in the Eiffel Tower street, artistic style"*
 
-### OpenAI (DALL-E)
+### OpenAI (DALL-E 2)
 ![Sample Image 2](images/image4.png)
-*Prompt: "Iron Man in the Smoky Mountains."*
+*Prompt: "Iron Man in the Smoky Mountains, realistic style, high quality"*
 
 ### DeepAI
-![Sample Image 4](images/image5.png)
-*Prompt: "Cat and Elephant in the Class"*
+![Sample Image 3](images/image5.png)
+*Prompt: "Cat and Elephant in the classroom, cartoon style"*
 
-## 🔍 Troubleshooting
+Each provider has its unique strengths and artistic style. Try different prompts and providers to find the best match for your needs!
 
-1. **Server Already Running**
-   ```bash
-   # Kill existing Node.js process
-   pkill -f "node app.js"
-   ```
+## 🌟 Provider Details
 
-2. **API Key Issues**
-   - Verify keys in `.env` file
-   - Check for whitespace in API keys
-   - Ensure billing is set up for OpenAI
-   - Verify HuggingFace token has proper permissions
+### OpenAI (DALL-E 2)
+- Latest DALL-E 2 model
+- Excellent for realistic images
+- Fast generation (2-5 seconds)
+- Requires API credits
 
-3. **Generation Failures**
-   - Check server logs for specific error messages
-   - Verify network connectivity
-   - Ensure prompt is appropriate and not too complex
+### HuggingFace (Stable Diffusion v1-4)
+- Reliable open-source model
+- Good for artistic styles
+- Free tier available
+- Multiple retry mechanism
 
-## 🛠 Development
+### MidJourney
+- High-quality artistic results
+- Available through APIFrame.pro
+- Unique artistic style
+- Paid service required
 
-### Adding New Providers
+### DeepAI
+- Various AI models
+- Good for experimentation
+- Competitive pricing
+- Simple API integration
 
-1. Create new service in `services/providers/`
-2. Implement required interface:
-   ```javascript
-   class NewProvider {
-     async generateImage(prompt) {
-       // Implementation
-     }
-   }
-   ```
-3. Register in `AIGateway.js`
+## 🔧 Technical Details
 
-### Project Structure
+### Error Handling
+- Automatic provider fallback
+- Multiple retry attempts
+- Detailed error messages
+- Graceful failure handling
+
+### Image Processing
+- Base64 and URL support
+- Multiple size options
+- Quality settings
+- Metadata preservation
+
+## 📁 Project Structure
+
 ```
 .
-├── services/
-│   ├── AIGateway.js              # Main gateway service
-│   └── providers/                # Provider implementations
-│       ├── OpenAIService.js      # DALL-E implementation
-│       ├── HuggingFaceService.js # Stable Diffusion implementation
-│       ├── MidJourneyService.js  # MidJourney implementation
-│       └── DeepAIService.js      # DeepAI implementation
-├── public/                       # Frontend assets
-│   └── index.html               # Main UI
-├── app.js                        # Express application
-└── package.json                 # Project dependencies
+├── server.js                    # Express server setup
+├── services/                    # Provider services
+│   ├── AIGateway.js            # Main gateway service
+│   └── providers/              # Individual providers
+├── public/                     # Static assets
+└── package.json                # Dependencies
+```
 
 ## 📝 Notes
 
-- OpenAI (DALL-E) has usage limits and requires billing setup
-- HuggingFace is free but might be slower
-- MidJourney requires API subscription
-- DeepAI has free tier with rate limits
-- Keep prompts clear and specific for best results
-- Image generation can take varying times depending on provider and complexity
+- OpenAI (DALL-E) requires proper billing setup
+- HuggingFace may have longer generation times
+- Provider availability may vary
+- Keep API keys secure and never commit them
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Contributions welcome! Please read the contributing guidelines first.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+MIT License - see LICENSE file for details

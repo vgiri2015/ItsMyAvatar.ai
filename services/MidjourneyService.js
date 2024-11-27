@@ -1,86 +1,82 @@
 const axios = require('axios');
+const FormData = require('form-data');
 
 class MidjourneyService {
     constructor(apiKey) {
         this.apiKey = apiKey;
-        this.baseURL = 'https://api.midjourney.com/v2';  
+        this.baseURL = 'https://api.apiframe.pro/v1';
     }
 
     isConfigured() {
-        return Boolean(this.apiKey);
+        return !!this.apiKey;
     }
 
     async generateImage(prompt) {
+        if (!this.isConfigured()) {
+            throw new Error('Midjourney is not configured');
+        }
+
         try {
-            console.log('Making imagine request to Midjourney with prompt:', prompt);
-            
-            const imagineResponse = await axios({
-                method: 'post',
-                url: `${this.baseURL}/imagine`,
-                headers: {
-                    'Authorization': `Bearer ${this.apiKey}`,
-                    'Content-Type': 'application/json',
-                },
-                data: {
-                    prompt: prompt,
-                    model: 'midjourney-v5'
+            console.log('Making request to Midjourney with prompt:', prompt);
+
+            // Create task
+            const createResponse = await axios.post(
+                `${this.baseURL}/midjourney/imagine`,
+                { prompt },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${this.apiKey}`,
+                        'Content-Type': 'application/json'
+                    }
                 }
-            });
+            );
 
-            console.log('Imagine Response:', imagineResponse.data);
-
-            if (!imagineResponse.data || !imagineResponse.data.taskId) {
+            if (!createResponse.data || !createResponse.data.taskId) {
                 throw new Error('Invalid response from Midjourney API');
             }
 
-            const taskId = imagineResponse.data.taskId;
-            console.log('Got task ID:', taskId);
+            const taskId = createResponse.data.taskId;
+            console.log('Task created:', taskId);
 
-            // Poll for the result
+            // Poll for result
             let attempts = 0;
-            const maxAttempts = 30;
+            const maxAttempts = 30; // 5 minutes maximum wait time
+            const delay = 10000; // 10 seconds between checks
+
             while (attempts < maxAttempts) {
-                console.log(`Checking status (attempt ${attempts + 1}/${maxAttempts})...`);
-                
-                const statusResponse = await axios({
-                    method: 'get',
-                    url: `${this.baseURL}/result/${taskId}`,
-                    headers: {
-                        'Authorization': `Bearer ${this.apiKey}`,
+                const statusResponse = await axios.get(
+                    `${this.baseURL}/midjourney/result/${taskId}`,
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${this.apiKey}`
+                        }
                     }
-                });
+                );
 
-                console.log('Status Response:', statusResponse.data);
+                console.log('Status check:', statusResponse.data);
 
-                if (statusResponse.data.status === 'completed' && statusResponse.data.imageUrl) {
+                if (statusResponse.data.status === 'completed') {
                     return {
-                        success: true,
                         url: statusResponse.data.imageUrl,
-                        provider: 'midjourney',
                         metadata: {
+                            provider: 'midjourney',
                             taskId: taskId
                         }
                     };
                 }
 
                 if (statusResponse.data.status === 'failed') {
-                    throw new Error('Image generation failed');
+                    throw new Error(`Midjourney task failed: ${statusResponse.data.error || 'Unknown error'}`);
                 }
 
-                await new Promise(resolve => setTimeout(resolve, 5000));
+                await new Promise(resolve => setTimeout(resolve, delay));
                 attempts++;
             }
 
-            throw new Error('Timed out waiting for image generation');
+            throw new Error('Midjourney task timed out');
         } catch (error) {
-            console.error('Midjourney API Error:', error.response ? {
-                status: error.response.status,
-                data: error.response.data
-            } : error.message);
-            
-            throw new Error(error.response ? 
-                `API Error (${error.response.status}): ${JSON.stringify(error.response.data)}` : 
-                error.message);
+            console.error('Midjourney error:', error);
+            throw error;
         }
     }
 }

@@ -6,7 +6,15 @@ class DeepAIService {
         this.baseURL = 'https://api.deepai.org/api';
     }
 
+    isConfigured() {
+        return !!this.apiKey;
+    }
+
     async generateImage(prompt) {
+        if (!this.isConfigured()) {
+            throw new Error('DeepAI is not configured');
+        }
+
         try {
             console.log('Making request to DeepAI with prompt:', prompt);
             
