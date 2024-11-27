@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="60" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+    <text x="10" y="35" font-family="Arial" font-size="16" font-weight="bold">Midjourney</text>
+    <polygon points="85,15 75,45 95,45 105,15" fill="#7289da"/>
+    <circle cx="90" cy="30" r="10" fill="#ffffff" fill-opacity="0.3"/>
+</svg>

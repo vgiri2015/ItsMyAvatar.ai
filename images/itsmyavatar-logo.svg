@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="50" viewBox="0 0 200 50" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        .logo-text { font-family: Arial, sans-serif; font-weight: bold; }
+        .primary { fill: #4a90e2; }
+        .secondary { fill: #2c3e50; }
+        .accent { fill: #e74c3c; }
+    </style>
+    <g transform="translate(10, 35)">
+        <text class="logo-text primary" font-size="24">ItsMyAvatar</text>
+        <text class="logo-text accent" x="140" font-size="24">.ai</text>
+        <circle class="accent" cx="165" cy="-15" r="3"/>
+    </g>
+</svg>

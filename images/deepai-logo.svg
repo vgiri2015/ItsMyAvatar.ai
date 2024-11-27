@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="60" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+    <text x="10" y="35" font-family="Arial" font-size="20" font-weight="bold">DeepAI</text>
+    <circle cx="90" cy="30" r="15" fill="#6c5ce7"/>
+    <path d="M80 30 Q90 15 100 30 Q90 45 80 30" fill="#a29bfe"/>
+</svg>
