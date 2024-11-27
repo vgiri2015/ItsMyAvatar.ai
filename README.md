@@ -1,52 +1,60 @@
-# AI Gateway Image Generator
+# Multi Model AI Image Generator using AI Gateway
 
-A versatile AI image generation service that provides a unified interface to multiple AI image generation providers including OpenAI (DALL-E) and Hugging Face (Stable Diffusion).
+A versatile AI image generation service that provides a unified interface to multiple AI image generation providers including OpenAI (DALL-E), Hugging Face (Stable Diffusion), MidJourney, and DeepAI.
 
-## 🌟 Key Features
+## 🚀 Features
 
-- **Multi-Provider Support**: Seamlessly switch between different AI image generation services
-- **Unified API**: Simple, consistent interface for all providers
-- **Provider-Specific Optimizations**: Each provider is configured for optimal performance
-- **Error Handling**: Robust error handling and fallback mechanisms
-- **Modern UI**: Clean, responsive interface with real-time feedback
+- Multiple AI Provider Support:
+  - OpenAI (DALL-E)
+  - HuggingFace (Stable Diffusion)
+  - MidJourney
+  - DeepAI
+- Unified API Interface
+- Automatic Fallback Mechanism
+- Real-time Image Generation
+- User-friendly Interface
 
-## 🚀 Quick Start
+## 🛠️ Setup
 
-1. Clone the repository:
-```bash
-git clone https://github.com/vgiri2015/myavatar.ai.git
-cd myavatar.ai
-```
+1. **Clone Repository**:
+   ```bash
+   git clone https://github.com/vgiri2015/myavatar.ai.git
+   cd myavatar.ai
+   ```
 
-2. Install dependencies:
-```bash
-npm install
-```
+2. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
 
-3. Set up your environment variables in a `.env` file:
-```env
-OPENAI_API_KEY=your_openai_api_key
-HUGGINGFACE_API_KEY=your_huggingface_api_key
-```
+3. **Configure Environment**:
+   Create a `.env` file with your API keys:
+   ```env
+   OPENAI_API_KEY=your_openai_key
+   HUGGINGFACE_API_KEY=your_huggingface_key
+   MIDJOURNEY_API_KEY=your_midjourney_key
+   DEEPAI_API_KEY=your_deepai_key
+   ```
 
-4. Start the server:
-```bash
-# First, ensure no other instance is running
-pkill -f "node app.js"
+   Get your API keys from:
+   - OpenAI: https://platform.openai.com/account/api-keys
+   - HuggingFace: https://huggingface.co/settings/tokens
+   - MidJourney: https://docs.midjourney.com/docs/api-reference
+   - DeepAI: https://deepai.org/dashboard/api-keys
 
-# Then start the server
-node app.js
-```
+4. **Start Server**:
+   ```bash
+   npm start
+   ```
 
-5. Open your browser and visit:
-```
-http://localhost:3000
-```
-
-## 🎨 Using the Image Generator
+## 🎯 Usage
 
 1. **Select Provider**:
-   - Choose between HuggingFace (Stable Diffusion) or OpenAI (DALL-E)
+   - Choose from available providers:
+     - HuggingFace (Stable Diffusion)
+     - OpenAI (DALL-E)
+     - MidJourney
+     - DeepAI
    - Each provider has different strengths and characteristics
 
 2. **Enter Prompt**:
@@ -59,36 +67,31 @@ http://localhost:3000
    - Generation typically takes 10-20 seconds
    - The UI will show a loading indicator during generation
 
-## 🔧 Architecture
+## 🌟 Provider Comparison
 
-### Provider System
-```
-AIGateway
-    ├── OpenAI Service (DALL-E)
-    └── HuggingFace Service (Stable Diffusion)
-```
+### OpenAI (DALL-E)
+- Best for: Realistic and artistic compositions
+- Fast generation time
+- Consistent quality
+- Requires paid API credits
 
-- **AIGateway**: Central service that routes requests to appropriate providers
-- **Provider Services**: Individual implementations for each AI service
-- **Fallback System**: If one provider fails, system can automatically try others
+### HuggingFace (Stable Diffusion)
+- Best for: Creative and artistic images
+- Free tier available
+- Good for experimentation
+- May have longer generation times
 
-### API Endpoints
+### MidJourney
+- Best for: Highly detailed artistic renderings
+- Excellent at stylized artwork
+- Strong with fantasy and concept art
+- Requires API subscription
 
-- `POST /generate`
-  ```json
-  {
-    "prompt": "Your image description",
-    "provider": "huggingface" // or "openai"
-  }
-  ```
-  Returns:
-  ```json
-  {
-    "success": true,
-    "url": "generated_image_url",
-    "provider": "provider_used"
-  }
-  ```
+### DeepAI
+- Best for: Quick prototypes and variations
+- Simple API integration
+- Good for basic image generation
+- Free tier with rate limits
 
 ## 🖼 Sample Generated Images
 
@@ -101,6 +104,14 @@ Here are some examples of images generated using different providers:
 ### OpenAI (DALL-E)
 ![Sample Image 2](images/image4.png)
 *Prompt: "Iron Man in the Smoky Mountains."*
+
+### MidJourney
+![Sample Image 3](images/image5.png)
+*Prompt: "Cyberpunk cityscape at sunset."*
+
+### DeepAI
+![Sample Image 4](images/image6.png)
+*Prompt: "Fantasy landscape with dragons."*
 
 ## 🔍 Troubleshooting
 
@@ -143,7 +154,9 @@ Here are some examples of images generated using different providers:
 │   ├── AIGateway.js              # Main gateway service
 │   └── providers/                # Provider implementations
 │       ├── OpenAIService.js      # DALL-E implementation
-│       └── HuggingFaceService.js # Stable Diffusion implementation
+│       ├── HuggingFaceService.js # Stable Diffusion implementation
+│       ├── MidJourneyService.js  # MidJourney implementation
+│       └── DeepAIService.js      # DeepAI implementation
 ├── public/                       # Frontend assets
 │   └── index.html               # Main UI
 ├── app.js                        # Express application
@@ -153,6 +166,8 @@ Here are some examples of images generated using different providers:
 
 - OpenAI (DALL-E) has usage limits and requires billing setup
 - HuggingFace is free but might be slower
+- MidJourney requires API subscription
+- DeepAI has free tier with rate limits
 - Keep prompts clear and specific for best results
 - Image generation can take varying times depending on provider and complexity
 
