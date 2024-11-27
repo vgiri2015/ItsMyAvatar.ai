@@ -39,7 +39,7 @@ A versatile AI image generation service that provides a unified interface to mul
    Get your API keys from:
    - OpenAI: https://platform.openai.com/account/api-keys
    - HuggingFace: https://huggingface.co/settings/tokens
-   - MidJourney: https://docs.midjourney.com/docs/api-reference
+   - MidJourney: https://apiframe.pro/
    - DeepAI: https://deepai.org/dashboard/api-keys
 
 4. **Start Server**:
