@@ -143,6 +143,11 @@ Here are some examples of images generated using different providers:
 ![Sample Image 3](images/image5.png)
 *Prompt: "Cat and Elephant in the classroom, cartoon style"*
 
+### Auto (Try All Providers)
+![Sample Image 4](images/image6.png)
+*Prompt: "Cat eating lunch"*
+
+
 Each provider has its unique strengths and artistic style. Try different prompts and providers to find the best match for your needs!
 
 ## 🌟 Provider Details
