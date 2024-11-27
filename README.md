@@ -126,8 +126,8 @@ Here are some examples of images generated using different providers:
 *Prompt: "Iron Man in the Smoky Mountains."*
 
 ### DeepAI
-![Sample Image 4](images/image6.png)
-*Prompt: "Fantasy landscape with dragons."*
+![Sample Image 4](images/image5.png)
+*Prompt: "Cat and Elephant in the Class"*
 
 ## 🔍 Troubleshooting
 
