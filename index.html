@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Gateway Image Generator - Professional AI Image Generation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #4a90e2 0%, #2c3e50 100%);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .feature-card {
+            border: none;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .provider-card {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .provider-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .gallery-item {
+            margin-bottom: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .pricing-card {
+            border: none;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .contact-section {
+            background-color: #f8f9fa;
+            padding: 80px 0;
+        }
+
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 40px 0;
+        }
+
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">AI Gateway</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#providers">Providers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="display-4 mb-4">Transform Your Ideas Into Art</h1>
+            <p class="lead mb-4">Generate stunning images using multiple AI providers including DALL-E, Stable Diffusion, MidJourney, and DeepAI</p>
+            <button class="btn btn-light btn-lg">Get Started</button>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Powerful Features</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-magic fa-3x mb-3 text-primary"></i>
+                            <h4>Multiple AI Providers</h4>
+                            <p>Access top AI image generation models through a single interface</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-bolt fa-3x mb-3 text-primary"></i>
+                            <h4>Real-time Generation</h4>
+                            <p>Get your AI-generated images in seconds</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-sync fa-3x mb-3 text-primary"></i>
+                            <h4>Automatic Fallback</h4>
+                            <p>Seamless provider switching for uninterrupted service</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Providers Section -->
+    <section id="providers" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Our Providers</h2>
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="provider-card text-center">
+                        <img src="images/openai-logo.png" alt="OpenAI" class="mb-3" style="height: 60px;">
+                        <h4>DALL-E</h4>
+                        <p>Best for realistic and artistic compositions</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="provider-card text-center">
+                        <img src="images/huggingface-logo.png" alt="HuggingFace" class="mb-3" style="height: 60px;">
+                        <h4>Stable Diffusion</h4>
+                        <p>Perfect for creative and artistic images</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="provider-card text-center">
+                        <img src="images/midjourney-logo.png" alt="MidJourney" class="mb-3" style="height: 60px;">
+                        <h4>MidJourney</h4>
+                        <p>Excellent for detailed artistic renderings</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="provider-card text-center">
+                        <img src="images/deepai-logo.png" alt="DeepAI" class="mb-3" style="height: 60px;">
+                        <h4>DeepAI</h4>
+                        <p>Great for quick prototypes and variations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Image Gallery</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="images/image3.png" alt="Sample 1" class="img-fluid">
+                        <div class="p-3">
+                            <p class="mb-0"><small class="text-muted">Generated using Stable Diffusion</small></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="images/image4.png" alt="Sample 2" class="img-fluid">
+                        <div class="p-3">
+                            <p class="mb-0"><small class="text-muted">Generated using DALL-E</small></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="images/image5.png" alt="Sample 3" class="img-fluid">
+                        <div class="p-3">
+                            <p class="mb-0"><small class="text-muted">Generated using DeepAI</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Pricing Plans</h2>
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="card pricing-card text-center">
+                        <div class="card-body">
+                            <h4 class="card-title">Basic</h4>
+                            <h2 class="card-price">$9<small>/month</small></h2>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>100 images/month</li>
+                                <li>Access to 2 providers</li>
+                                <li>Basic support</li>
+                                <li>Standard resolution</li>
+                            </ul>
+                            <button class="btn btn-outline-primary">Get Started</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card pricing-card text-center">
+                        <div class="card-body">
+                            <h4 class="card-title">Pro</h4>
+                            <h2 class="card-price">$29<small>/month</small></h2>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>500 images/month</li>
+                                <li>Access to all providers</li>
+                                <li>Priority support</li>
+                                <li>HD resolution</li>
+                            </ul>
+                            <button class="btn btn-primary">Get Started</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card pricing-card text-center">
+                        <div class="card-body">
+                            <h4 class="card-title">Enterprise</h4>
+                            <h2 class="card-price">$99<small>/month</small></h2>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>Unlimited images</li>
+                                <li>Custom provider integration</li>
+                                <li>24/7 support</li>
+                                <li>4K resolution</li>
+                            </ul>
+                            <button class="btn btn-outline-primary">Contact Us</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="text-center mb-5">Get In Touch</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <input type="text" class="form-control" placeholder="Your Name">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input type="email" class="form-control" placeholder="Your Email">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Subject">
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="5" placeholder="Your Message"></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <div class="social-links mb-4">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+            <p>&copy; 2023 AI Gateway Image Generator. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
