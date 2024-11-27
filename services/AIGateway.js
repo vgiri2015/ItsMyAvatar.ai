@@ -1,13 +1,17 @@
-const OpenAIService = require('./providers/OpenAIService');
+const OpenAIService = require('./OpenAIService');
 const HuggingFaceService = require('./providers/HuggingFaceService');
 const LlamaService = require('./providers/LlamaService');
+const MidjourneyService = require('./providers/MidjourneyService');
+const DeepAIService = require('./providers/DeepAIService');
 
 class AIGateway {
     constructor() {
         this.providers = {
             openai: new OpenAIService(),
             huggingface: new HuggingFaceService(),
-            llama: new LlamaService()
+            llama: new LlamaService(),
+            midjourney: new MidjourneyService(),
+            deepai: new DeepAIService()
             // Claude removed as it doesn't support image generation
         };
     }
