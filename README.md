@@ -127,21 +127,23 @@ Portkey Gateway (https://portkey.ai/) is a unified API gateway that simplifies a
 
 Here are some examples of avatars and images generated using our application:
 
+#### Artistic Avatar
+![Artistic Avatar Example](images/image7.png)
+
+#### Digital Art Avatars
+![Artistic Avatar Example](images/image8.png)
+
 #### Professional Avatars
 ![Professional Avatar Example](images/image3.png)
-*A professional avatar with modern business attire and confident pose*
 
 #### Creative Avatars
 ![Creative Avatar Example](images/image4.png)
-*An artistic avatar showcasing creative expression and unique style*
 
 #### Casual Avatars
 ![Casual Avatar Example](images/image5.png)
-*A casual avatar with relaxed style and natural expression*
 
 #### Artistic Interpretations
 ![Artistic Avatar Example](images/image6.png)
-*An artistic interpretation combining multiple styles and creative elements*
 
 ### Supported AI Providers
 
