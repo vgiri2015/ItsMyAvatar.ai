@@ -76,28 +76,38 @@ app.post('/api/generate', async (req, res) => {
 
         // Add style-specific enhancements for general images
         if (type === 'general') {
-            switch (style) {
-                case 'anime':
-                    enhancedPrompt += ', anime art style with high quality anime details';
-                    break;
-                case 'photographic':
-                    enhancedPrompt += ', professional photography style with perfect lighting and composition';
-                    break;
-                case 'digital-art':
-                    enhancedPrompt += ', detailed digital art style with vibrant colors';
-                    break;
-                case 'oil-painting':
-                    enhancedPrompt += ', oil painting style with rich textures and traditional artistic qualities';
-                    break;
-                case 'watercolor':
-                    enhancedPrompt += ', soft watercolor style with delicate brush strokes';
-                    break;
+            const styleEnhancements = {
+                anime: ', high quality anime artwork, detailed anime art style, vibrant colors, manga-inspired, professional anime illustration',
+                photographic: ', professional photography, perfect lighting, high-end camera, photorealistic quality, masterful composition, 8k resolution',
+                'digital-art': ', professional digital artwork, detailed digital painting, concept art quality, trending on artstation, vibrant colors, masterful digital illustration',
+                'oil-painting': ', masterful oil painting, rich textures, traditional oil painting techniques, detailed brushwork, gallery quality artwork, fine art',
+                watercolor: ', beautiful watercolor painting, delicate brushstrokes, artistic watercolor effects, traditional watercolor techniques, professional watercolor illustration'
+            };
+
+            if (styleEnhancements[style]) {
+                enhancedPrompt += styleEnhancements[style];
+            }
+
+            // Add quality-specific details
+            if (quality === 'hd' || quality === '4k') {
+                enhancedPrompt += ', masterpiece, best quality, highly detailed';
             }
         }
 
         // Avatar-specific optimizations
         let providerSettings = {};
         if (type === 'avatar') {
+            const avatarStyleEnhancements = {
+                realistic: ', professional headshot portrait, photorealistic, 8k, detailed facial features, professional lighting, high-end camera, clean background',
+                anime: ', high quality anime portrait, detailed anime character design, studio ghibli inspired, professional anime illustration, clean background',
+                '3d': ', 3D rendered portrait, pixar style, high quality 3D character, detailed textures, professional 3D modeling, clean background',
+                pixel: ', high quality pixel art portrait, 32-bit style, detailed pixel art character, professional pixel art, clean background'
+            };
+
+            if (avatarStyleEnhancements[style]) {
+                enhancedPrompt += avatarStyleEnhancements[style];
+            }
+
             providerSettings = avatarSettings[provider] || {};
             console.log('Using avatar settings:', providerSettings);
         }

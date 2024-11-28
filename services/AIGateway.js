@@ -255,18 +255,24 @@ class AIGateway {
         }
 
         try {
+            // Create form data
+            const formData = new FormData();
+            formData.append('text', prompt);
+            
+            // Add enhanced parameters based on quality
+            if (quality === 'hd' || quality === '4k') {
+                formData.append('grid_size', '1');
+                formData.append('width', '1024');
+                formData.append('height', '1024');
+            }
+
             const response = await axios({
                 method: 'post',
                 url: 'https://api.deepai.org/api/text2img',
-                data: {
-                    text: prompt,
-                    grid_size: "1", // Generate a single image
-                    width: parseInt(size.split('x')[0]),
-                    height: parseInt(size.split('x')[1])
-                },
+                data: formData,
                 headers: {
                     'api-key': apiKey,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'multipart/form-data'
                 }
             });
 
