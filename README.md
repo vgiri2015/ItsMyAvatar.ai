@@ -103,6 +103,55 @@ Portkey Gateway (https://portkey.ai/) is a unified API gateway that simplifies a
    - Automatic fallback chain
    - Smart routing based on availability
 
+## Image References and Examples
+
+### Features
+
+- Avatar Generation with Multiple Styles:
+  - Realistic
+  - Anime
+  - 3D
+  - Pixel Art
+- General Image Generation
+- Multi-Provider Support:
+  - OpenAI (DALL-E 3)
+  - HuggingFace (Stable Diffusion XL)
+  - DeepAI
+  - Midjourney (via API)
+- Quality Options:
+  - Standard
+  - HD
+  - 4K
+
+### Example Generations
+
+Here are some examples of avatars and images generated using our application:
+
+#### Professional Avatars
+![Professional Avatar Example](images/image3.png)
+*A professional avatar with modern business attire and confident pose*
+
+#### Creative Avatars
+![Creative Avatar Example](images/image4.png)
+*An artistic avatar showcasing creative expression and unique style*
+
+#### Casual Avatars
+![Casual Avatar Example](images/image5.png)
+*A casual avatar with relaxed style and natural expression*
+
+#### Artistic Interpretations
+![Artistic Avatar Example](images/image6.png)
+*An artistic interpretation combining multiple styles and creative elements*
+
+### Supported AI Providers
+
+<div style="display: flex; justify-content: space-around; align-items: center; margin: 20px 0;">
+  <img src="images/openai-logo.svg" alt="OpenAI" height="40">
+  <img src="images/huggingface-logo.svg" alt="HuggingFace" height="40">
+  <img src="images/deepai-logo.svg" alt="DeepAI" height="40">
+  <img src="images/midjourney-logo.svg" alt="Midjourney" height="40">
+</div>
+
 ## Setup and Configuration
 
 1. **Prerequisites**
