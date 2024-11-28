@@ -5,69 +5,292 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multi Model AI Image Generator using AI Gateway</title>
     <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f5f5f5;
+            --border-color: #e0e0e0;
+            --text-color: #333;
+            --error-color: #dc3545;
+            --success-color: #28a745;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #f5f5f5;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
         }
+
         .container {
             background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
+
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
         .provider-select {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+            background-color: white;
         }
+
+        .provider-select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .option-group {
+            background-color: var(--secondary-color);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .option-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .radio-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .radio-label:hover {
+            background-color: rgba(74, 144, 226, 0.1);
+        }
+
+        .radio-label input[type="radio"] {
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+        }
+
         textarea {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
             resize: vertical;
+            min-height: 100px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s;
         }
+
+        textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
         button {
-            background-color: #007bff;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
+            padding: 12px 25px;
+            border-radius: 8px;
             cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            width: 100%;
         }
+
+        button:hover {
+            background-color: #357abd;
+        }
+
         button:disabled {
             background-color: #ccc;
+            cursor: not-allowed;
         }
-        .result {
-            margin-top: 20px;
-        }
-        img {
-            max-width: 100%;
-            border-radius: 4px;
-            margin-top: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
+
         .loading {
             display: none;
             margin: 20px 0;
-            color: #666;
+            text-align: center;
+            font-size: 1.1em;
+            color: var(--primary-color);
         }
+
+        .result {
+            margin-top: 30px;
+        }
+
+        .metadata {
+            background-color: var(--secondary-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .metadata p {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+
+        .image-container {
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .image-controls {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            justify-content: center;
+        }
+
+        .control-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.2s;
+        }
+
+        .control-button:hover {
+            background-color: #357abd;
+        }
+
+        .control-button.secondary {
+            background-color: #6c757d;
+        }
+
+        .control-button.secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .edit-panel {
+            display: none;
+            background-color: var(--secondary-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .edit-panel.active {
+            display: block;
+        }
+
+        .edit-tools {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .tool-group {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .tool-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+        }
+
+        .slider {
+            width: 200px;
+            margin: 10px 0;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: block;
+            margin: 0 auto;
+        }
+
         .error {
-            color: #dc3545;
-            padding: 10px;
-            border-radius: 4px;
+            color: var(--error-color);
+            padding: 15px;
+            border-radius: 8px;
             background-color: #f8d7da;
             border: 1px solid #f5c6cb;
-            margin-top: 10px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .radio-group {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
         }
     </style>
 </head>
@@ -75,16 +298,71 @@
     <div class="container">
         <h1>Multi Model AI Image Generator</h1>
         <div class="input-group">
+            <label class="input-label" for="provider">Select Provider</label>
             <select id="provider" class="provider-select">
-                <option value="huggingface">HuggingFace (Stable Diffusion)</option>
-                <option value="openai">OpenAI (DALL-E)</option>
+                <option value="all">Auto (Try All Providers)</option>
+                <option value="openai">OpenAI (DALL-E 3)</option>
+                <option value="huggingface">Stable Diffusion</option>
                 <option value="midjourney">MidJourney</option>
                 <option value="deepai">DeepAI</option>
             </select>
-            <textarea id="prompt" rows="4" placeholder="Enter your image description..."></textarea>
+
+            <label class="input-label" for="prompt">Image Description</label>
+            <textarea id="prompt" placeholder="Describe the image you want to generate..."></textarea>
+
+            <div class="options-grid">
+                <div class="option-group">
+                    <div class="option-title">Art Style</div>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="style" value="none" checked>
+                            None
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="style" value="anime">
+                            Anime
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="style" value="photographic">
+                            Photographic
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="style" value="digital-art">
+                            Digital Art
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="style" value="oil-painting">
+                            Oil Painting
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="style" value="watercolor">
+                            Watercolor
+                        </label>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div class="option-title">Quality</div>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="quality" value="standard" checked>
+                            Standard
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="quality" value="hd">
+                            HD
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="quality" value="4k">
+                            4K
+                        </label>
+                    </div>
+                </div>
+            </div>
+
             <button id="generate">Generate Image</button>
         </div>
-        <div class="loading" id="loading">🎨 Creating your masterpiece... please wait...</div>
+        <div class="loading" id="loading"> Creating your masterpiece... please wait...</div>
         <div class="result" id="result"></div>
     </div>
 
@@ -94,10 +372,254 @@
         const providerSelect = document.getElementById('provider');
         const loadingDiv = document.getElementById('loading');
         const resultDiv = document.getElementById('result');
+        let currentImageUrl = null;
+
+        async function downloadImage(imageUrl, filename) {
+            try {
+                const response = await fetch(imageUrl);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            } catch (error) {
+                console.error('Error downloading image:', error);
+                alert('Failed to download image. Please try again.');
+            }
+        }
+
+        function toggleEditPanel() {
+            const editPanel = document.getElementById('edit-panel');
+            if (editPanel) {
+                editPanel.classList.toggle('active');
+                
+                if (editPanel.classList.contains('active')) {
+                    // Initialize color adjustment controls
+                    const brightnessSlider = document.getElementById('brightness');
+                    const contrastSlider = document.getElementById('contrast');
+                    const saturationSlider = document.getElementById('saturation');
+
+                    if (brightnessSlider && contrastSlider && saturationSlider) {
+                        brightnessSlider.addEventListener('input', updateColorAdjustments);
+                        contrastSlider.addEventListener('input', updateColorAdjustments);
+                        saturationSlider.addEventListener('input', updateColorAdjustments);
+                    }
+                }
+            }
+        }
+
+        async function applyEdit() {
+            const style = document.querySelector('input[name="edit-style"]:checked').value;
+            const quality = document.querySelector('input[name="quality"]:checked').value;
+            const imageUrl = document.getElementById('generated-image').src;
+            const metadata = document.getElementById('image-metadata');
+            const originalProvider = metadata?.dataset?.provider || 'huggingface';
+            
+            // Get color adjustments
+            const brightness = document.getElementById('brightness').value;
+            const contrast = document.getElementById('contrast').value;
+            const saturation = document.getElementById('saturation').value;
+            
+            if (!imageUrl) {
+                alert('No image to edit');
+                return;
+            }
+
+            generateBtn.disabled = true;
+            loadingDiv.style.display = 'block';
+
+            try {
+                const response = await fetch('/api/edit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        imageUrl,
+                        originalProvider,
+                        options: {
+                            style,
+                            quality,
+                            colorAdjustments: {
+                                brightness: parseInt(brightness),
+                                contrast: parseInt(contrast),
+                                saturation: parseInt(saturation)
+                            }
+                        }
+                    }),
+                });
+
+                const data = await response.json();
+                
+                if (!data.success || data.error) {
+                    throw new Error(data.error || 'Failed to edit image');
+                }
+
+                // Update the image and metadata
+                const resultHtml = `
+                    <div class="metadata" id="image-metadata" data-provider="${data.metadata?.provider || 'huggingface'}">
+                        <p><strong>Provider:</strong> ${data.metadata?.provider || 'Unknown'} ${data.metadata?.model ? `(${data.metadata.model})` : ''}</p>
+                        <p><strong>Style:</strong> ${data.metadata?.style || 'None'}</p>
+                        <p><strong>Quality:</strong> ${data.metadata?.quality || 'Standard'}</p>
+                        <p><strong>Edit:</strong> Style transfer with color adjustments</p>
+                    </div>
+                    <div class="image-container">
+                        <img src="${data.imageUrl}" alt="Edited image" id="generated-image" />
+                        <div class="image-controls">
+                            <button class="control-button" onclick="downloadImage('${data.imageUrl}', 'ai-edited-image.png')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M8 0a8 8 0 0 1 8 8 8 8 0 0 1-8 8A8 8 0 0 1 0 8a8 8 0 0 1 8-8zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                                </svg>
+                                Download
+                            </button>
+                            <button class="control-button secondary" onclick="toggleEditPanel()">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                </svg>
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                    <div id="edit-panel" class="edit-panel">
+                        <h3>Edit Image</h3>
+                        <div class="edit-tools">
+                            <div class="tool-group">
+                                <div class="tool-title">Style Transfer</div>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="edit-style" value="none" checked>
+                                        None
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="edit-style" value="anime">
+                                        Anime
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="edit-style" value="photographic">
+                                        Photographic
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="edit-style" value="digital-art">
+                                        Digital Art
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="edit-style" value="oil-painting">
+                                        Oil Painting
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="edit-style" value="watercolor">
+                                        Watercolor
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="tool-group">
+                                <div class="tool-title">Color Adjustment</div>
+                                <div class="slider-group">
+                                    <div class="slider-label">
+                                        <span>Brightness</span>
+                                        <span id="brightness-value">100%</span>
+                                    </div>
+                                    <input type="range" id="brightness" class="slider" min="0" max="200" value="100">
+                                </div>
+                                <div class="slider-group">
+                                    <div class="slider-label">
+                                        <span>Contrast</span>
+                                        <span id="contrast-value">100%</span>
+                                    </div>
+                                    <input type="range" id="contrast" class="slider" min="0" max="200" value="100">
+                                </div>
+                                <div class="slider-group">
+                                    <div class="slider-label">
+                                        <span>Saturation</span>
+                                        <span id="saturation-value">100%</span>
+                                    </div>
+                                    <input type="range" id="saturation" class="slider" min="0" max="200" value="100">
+                                </div>
+                            </div>
+                        </div>
+                        <button class="control-button" onclick="applyEdit()">Apply Changes</button>
+                    </div>
+                `;
+
+                resultDiv.innerHTML = resultHtml;
+
+                // Hide edit panel after successful edit
+                const editPanel = document.getElementById('edit-panel');
+                if (editPanel) {
+                    editPanel.classList.remove('active');
+                }
+
+                // Initialize color adjustment controls for the new panel
+                const brightnessSlider = document.getElementById('brightness');
+                const contrastSlider = document.getElementById('contrast');
+                const saturationSlider = document.getElementById('saturation');
+
+                if (brightnessSlider && contrastSlider && saturationSlider) {
+                    brightnessSlider.addEventListener('input', updateColorAdjustments);
+                    contrastSlider.addEventListener('input', updateColorAdjustments);
+                    saturationSlider.addEventListener('input', updateColorAdjustments);
+                }
+            } catch (error) {
+                alert(`Error editing image: ${error.message}`);
+            } finally {
+                generateBtn.disabled = false;
+                loadingDiv.style.display = 'none';
+            }
+        }
+
+        function toggleEditPanel() {
+            const editPanel = document.getElementById('edit-panel');
+            if (editPanel) {
+                editPanel.classList.toggle('active');
+                
+                if (editPanel.classList.contains('active')) {
+                    // Initialize color adjustment controls
+                    const brightnessSlider = document.getElementById('brightness');
+                    const contrastSlider = document.getElementById('contrast');
+                    const saturationSlider = document.getElementById('saturation');
+
+                    if (brightnessSlider && contrastSlider && saturationSlider) {
+                        brightnessSlider.addEventListener('input', updateColorAdjustments);
+                        contrastSlider.addEventListener('input', updateColorAdjustments);
+                        saturationSlider.addEventListener('input', updateColorAdjustments);
+                    }
+                }
+            }
+        }
+
+        function updateColorAdjustments() {
+            const brightnessSlider = document.getElementById('brightness');
+            const contrastSlider = document.getElementById('contrast');
+            const saturationSlider = document.getElementById('saturation');
+            const brightnessValue = document.getElementById('brightness-value');
+            const contrastValue = document.getElementById('contrast-value');
+            const saturationValue = document.getElementById('saturation-value');
+            const image = document.getElementById('generated-image');
+
+            if (brightnessSlider && contrastSlider && saturationSlider && 
+                brightnessValue && contrastValue && saturationValue && image) {
+                const brightness = brightnessSlider.value;
+                const contrast = contrastSlider.value;
+                const saturation = saturationSlider.value;
+
+                brightnessValue.textContent = `${brightness}%`;
+                contrastValue.textContent = `${contrast}%`;
+                saturationValue.textContent = `${saturation}%`;
+
+                image.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%)`;
+            }
+        }
 
         generateBtn.addEventListener('click', async () => {
             const prompt = promptInput.value.trim();
             const provider = providerSelect.value;
+            const style = document.querySelector('input[name="style"]:checked').value;
+            const quality = document.querySelector('input[name="quality"]:checked').value;
             
             if (!prompt) {
                 resultDiv.innerHTML = '<div class="error">Please enter a description for your image.</div>';
@@ -110,12 +632,20 @@
             resultDiv.innerHTML = '';
 
             try {
-                const response = await fetch('/generate', {
+                const response = await fetch('/api/generate', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ prompt, provider }),
+                    body: JSON.stringify({ 
+                        prompt, 
+                        provider,
+                        options: {
+                            style,
+                            quality,
+                            size: '1024x1024'
+                        }
+                    }),
                 });
 
                 const data = await response.json();
@@ -124,10 +654,91 @@
                     throw new Error(data.error || 'Failed to generate image');
                 }
 
-                // Display the generated image
+                // Display the generated image and metadata
                 resultDiv.innerHTML = `
-                    <p>Generated using ${data.provider}</p>
-                    <img src="${data.url}" alt="${prompt}" />
+                    <div class="metadata" id="image-metadata" data-provider="${data.metadata?.provider || 'huggingface'}">
+                        <p><strong>Provider:</strong> ${data.metadata?.provider || 'Unknown'} ${data.metadata?.model ? `(${data.metadata.model})` : ''}</p>
+                        <p><strong>Style:</strong> ${data.metadata?.style || 'None'}</p>
+                        <p><strong>Quality:</strong> ${data.metadata?.quality || 'Standard'}</p>
+                        <p><strong>Prompt:</strong> ${data.metadata?.prompt || prompt}</p>
+                    </div>
+                    <div class="image-container">
+                        <img src="${data.imageUrl}" alt="${prompt}" id="generated-image" />
+                        <div class="image-controls">
+                            <button class="control-button" onclick="downloadImage('${data.imageUrl}', 'ai-generated-image.png')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M8 0a8 8 0 0 1 8 8 8 8 0 0 1-8 8A8 8 0 0 1 0 8a8 8 0 0 1 8-8zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                                </svg>
+                                Download
+                            </button>
+                            <button class="control-button secondary" onclick="toggleEditPanel()">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                </svg>
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                    <div id="edit-panel" class="edit-panel">
+                        <h3>Edit Image</h3>
+                        <div class="edit-tools">
+                            <div class="tool-group">
+                                <div class="tool-title">Style Transfer</div>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="edit-style" value="none" checked>
+                                        None
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="edit-style" value="anime">
+                                        Anime
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="edit-style" value="photographic">
+                                        Photographic
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="edit-style" value="digital-art">
+                                        Digital Art
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="edit-style" value="oil-painting">
+                                        Oil Painting
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="edit-style" value="watercolor">
+                                        Watercolor
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="tool-group">
+                                <div class="tool-title">Color Adjustment</div>
+                                <div class="slider-group">
+                                    <div class="slider-label">
+                                        <span>Brightness</span>
+                                        <span id="brightness-value">100%</span>
+                                    </div>
+                                    <input type="range" id="brightness" class="slider" min="0" max="200" value="100">
+                                </div>
+                                <div class="slider-group">
+                                    <div class="slider-label">
+                                        <span>Contrast</span>
+                                        <span id="contrast-value">100%</span>
+                                    </div>
+                                    <input type="range" id="contrast" class="slider" min="0" max="200" value="100">
+                                </div>
+                                <div class="slider-group">
+                                    <div class="slider-label">
+                                        <span>Saturation</span>
+                                        <span id="saturation-value">100%</span>
+                                    </div>
+                                    <input type="range" id="saturation" class="slider" min="0" max="200" value="100">
+                                </div>
+                            </div>
+                        </div>
+                        <button class="control-button" onclick="applyEdit()">Apply Changes</button>
+                    </div>
                 `;
             } catch (error) {
                 resultDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
