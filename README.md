@@ -1,6 +1,6 @@
-# Multi Model AI Image Generator
+# Generate Your Imagination as Avatars
 
-A powerful multi-provider AI image generation web application that leverages the Portkey Gateway for seamless integration with multiple AI providers.
+An AI-powered image generation application that specializes in creating personalized avatars and images using multiple AI providers.
 
 ## Introduction to Portkey Gateway
 

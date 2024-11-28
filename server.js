@@ -24,6 +24,20 @@ const portkeyGateway = require('./services/PortkeyGateway');
 const aiGateway = require('./services/AIGateway');
 const app = express();
 
+// Avatar-specific settings for different providers
+const avatarSettings = {
+    openai: {
+        model: 'dall-e-3',
+        quality: 'hd',
+        style: 'vivid'
+    },
+    huggingface: {
+        model: 'stabilityai/stable-diffusion-xl-base-1.0',
+        guidance_scale: 8.5,
+        num_inference_steps: 50
+    }
+};
+
 // Middleware to parse JSON bodies
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
@@ -40,70 +54,71 @@ app.get('/', (req, res) => {
 app.post('/api/generate', async (req, res) => {
     try {
         const { prompt, provider, options = {} } = req.body;
-        const { style = 'none', size = '1024x1024', quality = 'standard' } = options;
+        const { style = 'none', quality = 'standard', type = 'general' } = options;
         
         console.log('Received generation request:', {
-            provider,
             prompt,
+            provider,
             options: {
                 style,
-                size,
-                quality
+                quality,
+                type
             }
         });
 
-        // Enhance the prompt based on style
+        // Enhance prompt based on quality
         let enhancedPrompt = prompt;
-        switch (style) {
-            case 'anime':
-                enhancedPrompt = `anime art style, ${prompt}, high quality anime artwork`;
-                break;
-            case 'photographic':
-                enhancedPrompt = `photorealistic photograph, ${prompt}, professional photography, high resolution`;
-                break;
-            case 'digital-art':
-                enhancedPrompt = `digital art style, ${prompt}, detailed digital illustration`;
-                break;
-            case 'oil-painting':
-                enhancedPrompt = `oil painting style, ${prompt}, traditional oil painting, artistic, textured`;
-                break;
-            case 'watercolor':
-                enhancedPrompt = `watercolor painting style, ${prompt}, soft watercolor artwork, artistic`;
-                break;
-            default:
-                // No style modification for 'none'
-                break;
+        if (quality === 'hd') {
+            enhancedPrompt += ', highly detailed, sharp focus, high resolution';
+        } else if (quality === '4k') {
+            enhancedPrompt += ', ultra high definition, extremely detailed, 4K resolution, maximum quality, sharp focus';
         }
 
-        // Add quality enhancement
-        switch (quality) {
-            case 'hd':
-                enhancedPrompt = `${enhancedPrompt}, highly detailed, sharp focus, high resolution`;
-                break;
-            case '4k':
-                enhancedPrompt = `${enhancedPrompt}, ultra high definition, extremely detailed, 4K resolution, maximum quality, sharp focus`;
-                break;
-            default:
-                // No quality modification for 'standard'
-                break;
+        // Add style-specific enhancements for general images
+        if (type === 'general') {
+            switch (style) {
+                case 'anime':
+                    enhancedPrompt += ', anime art style with high quality anime details';
+                    break;
+                case 'photographic':
+                    enhancedPrompt += ', professional photography style with perfect lighting and composition';
+                    break;
+                case 'digital-art':
+                    enhancedPrompt += ', detailed digital art style with vibrant colors';
+                    break;
+                case 'oil-painting':
+                    enhancedPrompt += ', oil painting style with rich textures and traditional artistic qualities';
+                    break;
+                case 'watercolor':
+                    enhancedPrompt += ', soft watercolor style with delicate brush strokes';
+                    break;
+            }
         }
 
-        console.log('Enhanced prompt:', enhancedPrompt);
+        // Avatar-specific optimizations
+        let providerSettings = {};
+        if (type === 'avatar') {
+            providerSettings = avatarSettings[provider] || {};
+            console.log('Using avatar settings:', providerSettings);
+        }
 
         // Try Portkey Gateway first
         try {
-            console.log('Attempting to generate image with Portkey Gateway...');
+            console.log('Attempting to generate with Portkey Gateway...');
             const result = await portkeyGateway.generateImage({
                 prompt: enhancedPrompt,
-                provider: provider === 'all' ? undefined : provider,
+                provider: provider || 'auto',
                 options: {
-                    size,
-                    quality
+                    size: '1024x1024',
+                    quality,
+                    type,
+                    style,
+                    ...providerSettings
                 }
             });
 
             console.log('Portkey generation successful');
-
+            
             return res.json({
                 success: true,
                 imageUrl: result.url,
@@ -113,8 +128,8 @@ app.post('/api/generate', async (req, res) => {
                     model: portkeyGateway.providerMap[result.provider]?.model || result.model,
                     prompt: enhancedPrompt,
                     style,
-                    size,
                     quality,
+                    type,
                     timestamp: new Date().toISOString()
                 }
             });
@@ -125,15 +140,18 @@ app.post('/api/generate', async (req, res) => {
             // Fallback to AI Gateway
             const result = await aiGateway.generateImage({
                 prompt: enhancedPrompt,
-                provider: provider === 'all' ? undefined : provider,
+                provider: provider || 'auto',
                 options: {
-                    size,
-                    quality
+                    size: '1024x1024',
+                    quality,
+                    type,
+                    style,
+                    ...providerSettings
                 }
             });
 
             console.log('AI Gateway generation successful');
-
+            
             return res.json({
                 success: true,
                 imageUrl: result.url,
@@ -143,163 +161,14 @@ app.post('/api/generate', async (req, res) => {
                     model: result.model,
                     prompt: enhancedPrompt,
                     style,
-                    size,
                     quality,
+                    type,
                     timestamp: new Date().toISOString()
                 }
             });
         }
     } catch (error) {
         console.error('Error generating image:', error);
-        res.status(500).json({
-            success: false,
-            error: error.message
-        });
-    }
-});
-
-// Image Edit API endpoint
-app.post('/api/edit', async (req, res) => {
-    try {
-        const { imageUrl, originalProvider, options = {} } = req.body;
-        const { style = 'none', quality = 'standard', colorAdjustments } = options;
-        
-        console.log('Received edit request:', {
-            imageUrl,
-            originalProvider,
-            options: {
-                style,
-                quality,
-                colorAdjustments
-            }
-        });
-
-        // Create a prompt that describes the style transfer and adjustments
-        let prompt = "Transform this exact image";
-        
-        // Add style description
-        switch (style) {
-            case 'anime':
-                prompt = "Transform this exact image into anime art style while preserving the original composition and subject matter";
-                break;
-            case 'photographic':
-                prompt = "Make this exact image photorealistic while maintaining the original composition and subject matter";
-                break;
-            case 'digital-art':
-                prompt = "Convert this exact image into detailed digital art style while preserving the original composition and subject matter";
-                break;
-            case 'oil-painting':
-                prompt = "Transform this exact image into an oil painting style while maintaining the original composition and subject matter";
-                break;
-            case 'watercolor':
-                prompt = "Convert this exact image into a soft watercolor painting style while preserving the original composition and subject matter";
-                break;
-            default:
-                // No style modification for 'none'
-                break;
-        }
-
-        // Add color adjustment description if provided
-        if (colorAdjustments) {
-            const { brightness, contrast, saturation } = colorAdjustments;
-            if (brightness !== 100) {
-                prompt += brightness > 100 ? ", make it brighter" : ", make it darker";
-            }
-            if (contrast !== 100) {
-                prompt += contrast > 100 ? ", increase contrast" : ", decrease contrast";
-            }
-            if (saturation !== 100) {
-                prompt += saturation > 100 ? ", make colors more vibrant" : ", make colors more muted";
-            }
-        }
-
-        // Add quality enhancement
-        switch (quality) {
-            case 'hd':
-                prompt = `${prompt}, highly detailed, sharp focus, high resolution`;
-                break;
-            case '4k':
-                prompt = `${prompt}, ultra high definition, extremely detailed, 4K resolution, maximum quality, sharp focus`;
-                break;
-            default:
-                // No quality modification for 'standard'
-                break;
-        }
-
-        // Ensure we're using the source image
-        prompt += ", based on the provided reference image";
-
-        console.log('Enhanced edit prompt:', prompt);
-
-        // Try Portkey Gateway for editing
-        try {
-            console.log('Attempting to edit image with Portkey Gateway...');
-            const result = await portkeyGateway.generateImage({
-                prompt,
-                provider: originalProvider || 'huggingface',
-                options: {
-                    size: '1024x1024',
-                    quality,
-                    sourceImage: imageUrl,
-                    mode: 'edit', // Specify edit mode
-                    strength: 0.8, // Control how much to preserve from the original image
-                    guidanceScale: 7.5 // Control adherence to prompt
-                }
-            });
-
-            console.log('Portkey edit successful');
-
-            return res.json({
-                success: true,
-                imageUrl: result.url,
-                metadata: {
-                    gateway: 'PortkeyGateway',
-                    provider: result.provider,
-                    model: portkeyGateway.providerMap[result.provider]?.model || result.model,
-                    prompt,
-                    style,
-                    quality,
-                    colorAdjustments,
-                    timestamp: new Date().toISOString()
-                }
-            });
-        } catch (portkeyError) {
-            console.error('Portkey Gateway failed:', portkeyError);
-            console.log('Falling back to AI Gateway...');
-
-            // Fallback to AI Gateway
-            const result = await aiGateway.generateImage({
-                prompt,
-                provider: originalProvider || 'huggingface',
-                options: {
-                    size: '1024x1024',
-                    quality,
-                    sourceImage: imageUrl,
-                    mode: 'edit', // Specify edit mode
-                    strength: 0.8, // Control how much to preserve from the original image
-                    guidanceScale: 7.5 // Control adherence to prompt
-                }
-            });
-
-            console.log('AI Gateway edit successful');
-
-            return res.json({
-                success: true,
-                imageUrl: result.url,
-                metadata: {
-                    gateway: result.gateway || 'AIGateway',
-                    provider: result.provider,
-                    model: result.model,
-                    prompt,
-                    style,
-                    quality,
-                    colorAdjustments,
-                    timestamp: new Date().toISOString()
-                }
-            });
-        }
-    } catch (error) {
-        console.error('Error editing image:', error);
         res.status(500).json({
             success: false,
             error: error.message

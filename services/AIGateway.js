@@ -247,7 +247,7 @@ class AIGateway {
 
     async generateDeepAIImage(options) {
         const { prompt, options: imageOptions = {} } = options;
-        const { size = '1024x1024' } = imageOptions;
+        const { size = '1024x1024', quality } = imageOptions;
 
         const apiKey = process.env.DEEPAI_API_KEY;
         if (!apiKey) {
@@ -255,19 +255,20 @@ class AIGateway {
         }
 
         try {
-            const formData = new URLSearchParams();
-            formData.append('text', prompt);
-            
-            const response = await axios.post(
-                'https://api.deepai.org/api/text2img',
-                formData,
-                {
-                    headers: {
-                        'api-key': apiKey,
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
+            const response = await axios({
+                method: 'post',
+                url: 'https://api.deepai.org/api/text2img',
+                data: {
+                    text: prompt,
+                    grid_size: "1", // Generate a single image
+                    width: parseInt(size.split('x')[0]),
+                    height: parseInt(size.split('x')[1])
+                },
+                headers: {
+                    'api-key': apiKey,
+                    'Content-Type': 'application/json'
                 }
-            );
+            });
 
             if (!response.data.output_url) {
                 throw new Error('No image URL in response');
