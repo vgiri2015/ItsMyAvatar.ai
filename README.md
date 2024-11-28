@@ -1,10 +1,10 @@
-# AI Gateway Image Generator
+# Multi Model AI Image Generator
 
 A powerful multi-provider AI image generation web application that leverages the Portkey Gateway for seamless integration with multiple AI providers.
 
 ## Introduction to Portkey Gateway
 
-Portkey Gateway is a unified API gateway that simplifies access to multiple AI providers. Key features include:
+Portkey Gateway (https://portkey.ai/) is a unified API gateway that simplifies access to multiple AI providers. Key features include:
 
 - **Multi-Provider Support**: Seamlessly switch between providers like OpenAI, HuggingFace, and more
 - **Smart Routing**: Automatically routes requests to the best available provider
@@ -116,6 +116,9 @@ Portkey Gateway is a unified API gateway that simplifies access to multiple AI p
    PORTKEY_API_KEY=your_portkey_api_key
    HUGGINGFACE_API_KEY=your_huggingface_key
    OPENAI_API_KEY=your_openai_key
+   DEEPAI_API_KEY=your_deepai_key
+   MIDJOURNEY_API_KEY=your_midjourney_key
+
    ```
 
 3. **Installation**
